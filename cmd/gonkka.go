@@ -13,13 +13,19 @@ func main() {
 	log.SetLevel(log.DebugLevel)
 	token := os.Getenv("SLACKTOKEN")
 	if token == "" {
-		log.Fatal("missing SLACKTOKEN environment variable")
+		log.Fatal("missing SLACKTOKEN=xoxb-... environment variable")
 	}
-	rest := gocd.NewRest("jenkins2.local:8153", context.TODO())
+
+	host := os.Getenv("GOCD_HOST")
+	if host == "" {
+		log.Fatal("missing GOCD_HOST=jenkins2.local:8153 environment variable")
+	}
+
+	rest := gocd.NewRest(host, context.TODO())
 
 	bot := slackbot.New(token)
 	sh := slackhandler.New(bot.Rtm, rest)
 	bot.AddTrigger(`ios (?P<Id>\d+)`, sh.HandleIosInstance)
 	bot.AddTrigger(`android (?P<Id>\d+)`, sh.HandleAndroidInstance)
-	log.WithError(bot.Run()).Fatal("bot is died")
+	log.WithError(bot.Run()).Fatal("bot is dead")
 }
