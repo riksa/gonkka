@@ -1,0 +1,132 @@
+---
+swagger: "2.0"
+info:
+  description: "gocd api"
+  version: "1.0.0"
+  title: "gocd api"
+  contact:
+    email: "rnd@worddive.com"
+host: "virtserver.swaggerhub.com"
+basePath: "/go/api"
+schemes: [http]
+paths:
+  /pipelines/{app}/history/{id}:
+    get:
+      summary: "Histroy request"
+      description: "History request"
+      operationId: "history"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          minimum: 1
+          description: instance id.
+        - in: path
+          name: app
+          required: true
+          type: string
+          description: app id.
+      responses:
+        200:
+          description: "History request success"
+          schema:
+            $ref: "#/definitions/HistoryResponse"
+  /pipelines/{app}/instance/{id}:
+    get:
+      summary: "Instance request"
+      description: "Instance request"
+      operationId: "instance"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          minimum: 1
+          description: instance id.
+        - in: path
+          name: app
+          required: true
+          type: string
+          description: app id.
+      responses:
+        200:
+          description: "Instance request success"
+          schema:
+            $ref: "#/definitions/InstanceResponse"
+definitions:
+  HistoryResponse:
+    type: "object"
+    properties:
+      pipelines:
+        type: "array"
+        items:
+          $ref: "#/definitions/Pipeline"
+  InstanceResponse:
+    type: "object"
+    properties:
+      label:
+        type: "string"
+      name:
+        type: "string"
+      build_cause:
+        $ref: "#/definitions/BuildCause"
+  BuildCause:
+    type: "object"
+    properties:
+      trigger_message:
+        type: "string"
+      material_revisions:
+        type: "array"
+        items:
+          $ref: "#/definitions/MaterialRevision"
+  MaterialRevision:
+    type: "object"
+    properties:
+      material:
+        $ref: "#/definitions/Material"
+      modifications:
+        type: "array"
+        items:
+          $ref: "#/definitions/Modification"
+  Material:
+    type: "object"
+    properties:
+      fingerprint:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      type:
+        type: string
+  Modification:
+    type: "object"
+    properties:
+      modified_time:
+        type: integer
+      user_name:
+        type: string
+      id:
+        type: integer
+      revision:
+        type: string
+      email_address:
+        type: string
+      comment:
+        type: string
+  Pipeline:
+    type: "object"
+    properties:
+      label:
+        type: "string"
+      name:
+        type: "string"
