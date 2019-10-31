@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-type MessageHander func(m map[string]string, rtm *slack.RTM, event *slack.MessageEvent) error
+type MessageHander func(m map[string]string, event *slack.MessageEvent) error
 
 type Trigger struct {
 	regexp  *regexp.Regexp
@@ -37,11 +37,11 @@ func (t *Trigger) Params(s string) (m map[string]string) {
 	return
 }
 
-func (t *Trigger) Handle(s string, rtm *slack.RTM, event *slack.MessageEvent) error {
+func (t *Trigger) Handle(s string, event *slack.MessageEvent) error {
 	if !t.Matches(s) {
 		return errors.New("trigger not matched")
 	}
 
 	params := t.Params(s)
-	return t.handler(params, rtm, event)
+	return t.handler(params, event)
 }
