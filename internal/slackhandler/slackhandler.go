@@ -2,9 +2,9 @@ package slackhandler
 
 import (
 	"fmt"
-	"github.com/nlopes/slack"
 	"github.com/riksa/gonkka/pkg/gocd"
 	log "github.com/sirupsen/logrus"
+	"github.com/slack-go/slack"
 	"strconv"
 	"strings"
 )

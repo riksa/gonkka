@@ -3,9 +3,9 @@ package slackbot
 import (
 	"errors"
 	"fmt"
-	"github.com/nlopes/slack"
 	"github.com/riksa/gonkka/internal/slackbot/trigger"
 	log "github.com/sirupsen/logrus"
+	"github.com/slack-go/slack"
 )
 
 type Bot struct {
@@ -30,7 +30,7 @@ func (bot *Bot) Run() error {
 		select {
 		case msg := <-bot.Rtm.IncomingEvents:
 
-			log.Debug("event received")
+//			log.Debug("event received")
 			switch ev := msg.Data.(type) {
 			case *slack.MessageEvent:
 				info := bot.Rtm.GetInfo()

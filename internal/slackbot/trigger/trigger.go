@@ -2,7 +2,7 @@ package trigger
 
 import (
 	"errors"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	"regexp"
 )
 

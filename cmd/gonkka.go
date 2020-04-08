@@ -27,5 +27,6 @@ func main() {
 	sh := slackhandler.New(bot.Rtm, rest)
 	bot.AddTrigger(`ios (?P<Id>\d+)`, sh.HandleIosInstance)
 	bot.AddTrigger(`android (?P<Id>\d+)`, sh.HandleAndroidInstance)
+	log.Debug("bot running")
 	log.WithError(bot.Run()).Fatal("bot is dead")
 }
